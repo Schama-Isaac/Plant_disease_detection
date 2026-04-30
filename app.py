@@ -1,4 +1,5 @@
 import streamlit as st
+from PIL import Image
 
 st.set_page_config(page_title="Tomato Disease Classifier", page_icon="🍅", layout="wide")
 
@@ -35,3 +36,7 @@ st.markdown("""
 
 **Model** : Custom CNN (3 conv blocks + Dropout) trained with PyTorch and data augmentation
 """)
+
+st.sidebar.title("Scanner pour mobile")
+qr_image = Image.open("qr_code.png")
+st.sidebar.image(qr_image, caption="Scannez pour tester sur votre téléphone !")
