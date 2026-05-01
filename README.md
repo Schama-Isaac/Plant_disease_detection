@@ -23,6 +23,33 @@ This project presents a complete machine learning pipeline for tomato disease cl
 - **Training Images**: 12,808
 - **Classes**: 10
 
+## 🔬 Experiment Tracking (20 epochs)
+
+The `experiments/` folder documents the model selection phase. Three training runs were compared with the same architecture and number of epochs, while varying the learning rate (`alpha`):
+
+| Run folder | Learning rate | Stored artifacts |
+|---|---:|---|
+| `Epoch20_alpha0.001 copie/` | 0.001 | training curve, precision/recall/F1 plot, confusion matrix |
+| `Epoch20_alpha0.01 copie/` | 0.01 | training curve, precision/recall/F1 plot, confusion matrix |
+| `Epoch20_alpha0.05/` | 0.05 | training curve, precision/recall/F1 plot, confusion matrix |
+
+Each run contains:
+- `Training_*.png`: train/validation dynamics over epochs
+- `Precision_*.png`: class-wise precision/recall/F1 behavior
+- `Matrix_*.png`: confusion matrix for error analysis
+
+### ✅ Why the final model was selected
+
+The final deployed model (`tomato_cnn.pth`) was selected after comparing these experiment runs.
+
+Decision criteria used across runs:
+- Validation stability across epochs (no large oscillations)
+- Better class separation in the confusion matrix
+- Strong macro-level precision/recall/F1 balance
+- Robust behavior on difficult classes such as `Early_blight`
+
+Based on this comparison, the retained configuration is aligned with the final app setup (`Adam`, learning rate `0.001`, custom CNN), which delivers the reported production metrics (96.5% test accuracy, macro F1 = 0.959).
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -66,6 +93,8 @@ streamlit run app.py
 
 The application will open in your default web browser at `http://localhost:8501`
 
+To access the demo quickly on mobile, scan the QR code displayed in the app sidebar.
+
 ## 📱 Features & Navigation
 
 The app includes four main pages accessible from the sidebar:
@@ -106,6 +135,19 @@ Input image size: 256×256×3 (RGB)
 ```
 Plant_disease_detection-dev/
 ├── app.py                      # Main Streamlit app
+├── experiments/                # Model selection runs (20 epochs, multiple learning rates)
+│   ├── Epoch20_alpha0.001 copie/
+│   │   ├── Training_001_20.png
+│   │   ├── Precision_001_20.png
+│   │   └── Matrix_001_20.png
+│   ├── Epoch20_alpha0.01 copie/
+│   │   ├── Training_01_20.png
+│   │   ├── Precision_01_20.png
+│   │   └── Matrix_01_20.png
+│   └── Epoch20_alpha0.05/
+│       ├── Training_05_20.png
+│       ├── Precision_05_20.png
+│       └── Matrix_05_20.png
 ├── pages/
 │   ├── 1_Dataset.py            # Dataset exploration
 │   ├── 2_Model_Training.py     # Training details
@@ -182,6 +224,12 @@ This project is part of the aivancity School of AI & Data curriculum.
 ## 📧 Contact & Support
 
 For issues or questions about the project, please refer to the repository's issues section.
+
+## 📱 QR Code (Demo Access)
+
+Scan this QR code to open the demo from your phone:
+
+![QR Code for Demo Access](qr_code.png)
 
 ---
 
